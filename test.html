@@ -1,0 +1,163 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<style>
+    .bannershop {
+        background-image: url('https://png.pngtree.com/thumb_back/fw800/back_our/20190619/ourmid/pngtree-fresh-fruit-and-vegetable-poster-image_139250.jpg');
+        background-size: cover;
+        /* Kéo căng ảnh nền để phủ kín phần nền */
+        background-position: center;
+        /* Canh giữa ảnh nền */
+        position: relative;
+        padding: 0;
+        margin: 0;
+        height: 180px;
+        /* Sử dụng chiều cao của toàn bộ viewport */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        color: white;
+        /* Để đảm bảo nội dung dễ đọc trên ảnh nền */
+        text-align: center;
+    }
+
+    .bannershop .banner-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 10;
+    }
+
+    .bannershop h1 {
+        color: #fff;
+        z-index: 100;
+        padding: 10px;
+        position: relative;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    body {
+        text-align: center;
+    }
+
+
+    button {
+        background: #1AAB8A;
+        color: #fff;
+        border: none;
+        position: relative;
+        height: 60px;
+        font-size: 1.6em;
+        padding: 0 2em;
+        cursor: pointer;
+        transition: 800ms ease all;
+        outline: none;
+        border-radius: 10px;
+    }
+
+    button:hover {
+        background: #fff;
+        color: #1AAB8A;
+    }
+
+    button:before,
+    button:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #1AAB8A;
+        transition: 400ms ease all;
+    }
+
+    button:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    button:hover:before,
+    button:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }
+</style>
+<div class="container">
+
+    <div>
+        <div class="bannershop">
+            <h1>Thông Tin Đơn Hàng</h1>
+            <div class="banner-bg"></div>
+
+        </div>
+
+        <div >
+            <table border="1" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Stt</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Hình Ảnh</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Thành Tiền</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($order->detail as $det)
+                    <tr>
+                        <td>{{$loop -> index + 1}}</td>
+                        <td>{{$det -> product -> name}}</td>
+                        <td>{{$det -> product -> name}}</td>
+                        <td>{{$det -> price}}</td>
+                        <td>{{$det -> quantity}}</td>
+                        <td>{{$det -> quantity * $det -> price}}</td>
+
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+
+                <h2>Khách Hàng : {{$customer->name}}</h2>
+                <h4>Mã ĐH : {{$order->id}}</h4>
+                <h4>Ngày Đặt : {{$order->created_at->format('d/m/Y')}}</h4>
+                <h4>Tổng Giá Trị Hóa Đơn : {{$order->getTotal()}}</h4>
+
+                <br>
+                <form action="{{route('cart.orderEmail', $order->token)}}" method="get">
+                    <button >Xác Nhận !</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <a href="https://dm-sg.aliyuncs.com/trace/v1/report?bid=1&amp;env=576460911156300342&amp;mac=86677&amp;mf=noreply.news%40e-mail.hoyoverse.com&amp;msgid=2207-8209-3979966-vi_vn&amp;sac=0&amp;tag=hk4elang&amp;tid=&amp;to=worfmini%40gmail.com&amp;tpl=&amp;ts=1697723118&amp;type=0&amp;url=https%3A%2F%2Fyoutu.be%2FM9kQP-cmipY%3Futm_source%3Demail%26utm_medium%3Dgame%26utm_id%3D2%26utm_campaign%3DGI-E-MK-RCL-41VENDI-1019%26utm_content%3Dvi-vn_BannerwMobileImageURL&amp;v=1.0&amp;sign=ec24b1e55256af92672501e3d1b234de"
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://dm-sg.aliyuncs.com/trace/v1/report?bid%3D1%26env%3D576460911156300342%26mac%3D86677%26mf%3Dnoreply.news%2540e-mail.hoyoverse.com%26msgid%3D2207-8209-3979966-vi_vn%26sac%3D0%26tag%3Dhk4elang%26tid%3D%26to%3Dworfmini%2540gmail.com%26tpl%3D%26ts%3D1697723118%26type%3D0%26url%3Dhttps%253A%252F%252Fyoutu.be%252FM9kQP-cmipY%253Futm_source%253Demail%2526utm_medium%253Dgame%2526utm_id%253D2%2526utm_campaign%253DGI-E-MK-RCL-41VENDI-1019%2526utm_content%253Dvi-vn_BannerwMobileImageURL%26v%3D1.0%26sign%3Dec24b1e55256af92672501e3d1b234de&amp;source=gmail&amp;ust=1698048780089000&amp;usg=AOvVaw3GDj9E5yS3UWCAyjaXAJj2"><img
+                        class="m_-7570988504324251673img-hover CToWUd"
+                        src="https://demoda.vn/wp-content/uploads/2023/02/hinh-anh-dong-cam-on-cute-ngo-nghinh.gif"
+                        alt="GI-E-MK-RCL-41VENDI-1019" data-bit="iit"></a>
+
+            </div>
+        </div>
+        <br>
+        <br>
+
+
+
+
+
+
+    </div>
+</div>
